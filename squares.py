@@ -16,13 +16,17 @@ def parse_string(s):
     l.append(sublist)  # in case line end is not enclosed in the string
     return l
 
-
 def calc_sum(values):
-    sum = 0
-    for row in values:
-            for v in row:
-                sum += v
-    return sum
+    row_sums = [sum(row) for row in values]
+    return sum(row_sums)
+
+    
+# def calc_sum(values):
+#     sum = 0
+#     for row in values:
+#             for v in row:
+#                 sum += v
+#     return sum
 
 
 def validate_square_area(area):
@@ -84,14 +88,10 @@ def validate_square_filled(height, width, sum_new_square):
     """
     area_expected = height * width
     actual_area = sum_new_square
-    if actual_area == area_expected:
-        return True
-    else:
-        return False
+    return actual_area == area_expected
 
 
 def produce_output(values, case=1):
-    # values = parse_string(input)
     # quickly reject square if the area is not square
     if not validate_square_area(calc_sum(values)):
         return "Case #{}: NO".format(case)

@@ -16,10 +16,12 @@ def test_parse_string():
 ....
 ...."""
 
-    expected = [[0,0,1,1],
-               [0,0,1,1],
-               [0,0,0,0],
-               [0,0,0,0]]
+    expected = [
+              [0, 0, 1, 1],
+              [0, 0, 1, 1],
+              [0, 0, 0, 0],
+              [0, 0, 0, 0],
+               ]
 
     actual = parse_string(input)
     assert expected == actual
@@ -158,5 +160,6 @@ def test_parsing_file():
     assert expected == actual
 
 
-if __name__ == '__main__':
-    pytest.main([__file__])
+if __name__ == '__main__':  
+    # from command line:  py.test tests.py -v
+    pytest.main([__file__],'-v')
