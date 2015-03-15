@@ -1,40 +1,34 @@
 from itertools import islice
 
+
 def parse_string(s):
     """
     parses individual blocks into arrays of 0s and 1s
     """
-    l = []
-    sublist = []
-    for c in s:
-        if c != '\n':
-            c = 1 if c == '#' else 0
-            sublist.append(c)
-        else:
-            l.append(sublist)
-            sublist = []
-    l.append(sublist)  # in case line end is not enclosed in the string
-    return l
+    rows = s.split('\n')
+    return [parse_row(row) for row in rows]
+
+
+def parse_row(row):
+    return [parse_char(char) for char in row]
+
+
+def parse_char(char):
+    if char == '#':
+        return 1
+    elif char == '.':
+        return 0
+    raise ValueError('Invalid character: {}'.format(char))
+
 
 def calc_sum(values):
     row_sums = [sum(row) for row in values]
     return sum(row_sums)
 
-    
-# def calc_sum(values):
-#     sum = 0
-#     for row in values:
-#             for v in row:
-#                 sum += v
-#     return sum
-
 
 def validate_square_area(area):
     square = area ** 0.5
-    if square.is_integer():
-        return True
-    else:
-        return False
+    return square.is_integer()
 
 
 def get_first_point(values):
@@ -110,7 +104,7 @@ def produce_output(values, case=1):
 def parse_file(filename):
     with open(filename, 'r') as file:
         lines = iter(file)
-        next(lines)  # Discard the number of test cases T
+        next(lines)  # Discard the number of test cases
         while lines:
             number_of_rows = int(next(lines)) 
             string = "".join(list(islice(lines, number_of_rows)))[:-1]  # removing end of line character
@@ -119,4 +113,3 @@ def parse_file(filename):
 if __name__ == '__main__':
     for index, s in enumerate(list(parse_file('square_detector.txt'))):
         print produce_output(s, index+1)
-
